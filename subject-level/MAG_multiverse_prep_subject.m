@@ -23,7 +23,7 @@
 %
 % Run AFTER preprocessing (requires the same feature files as trial-level).
 
-disp(upper('=== AOC MULTIVERSE SUBJECT-LEVEL PREP START ==='))
+disp(upper('=== MAG MULTIVERSE SUBJECT-LEVEL PREP START ==='))
 
 %% Setup: run startup and setup FIRST (startup may clear the workspace)
 path_preproc = [];
@@ -119,13 +119,13 @@ disp(upper('--- STERNBERG TASK ---'))
     n_elec, n_fooof, n_lat, n_alpha, n_gaze, n_bl_eeg, n_bl_gaze, n_universes, alphaRange);
 disp(upper(['Sternberg table rows: ' num2str(height(tbl_s))]))
 if height(tbl_s) == 0
-  error('AOC_multiverse_prep_subject:NoData', 'Sternberg table is empty.')
+  error('MAG_multiverse_prep_subject:NoData', 'Sternberg table is empty.')
 end
-writetable(tbl_s, fullfile(out_dir, 'multiverse_sternberg_subject.csv'));
-disp(upper(['Written: ' fullfile(out_dir, 'multiverse_sternberg_subject.csv')]))
+writetable(tbl_s, fullfile(out_dir, 'MAG_multiverse_sternberg_subject.csv'));
+disp(upper(['Written: ' fullfile(out_dir, 'MAG_multiverse_sternberg_subject.csv')]))
 if height(r2_s) > 0
-  writetable(r2_s, fullfile(r2_dir, 'fooof_r2_sternberg_subject.csv'));
-  disp(upper(['Written: ' fullfile(r2_dir, 'fooof_r2_sternberg_subject.csv') ' (' num2str(height(r2_s)) ' FOOOF fits)']))
+  writetable(r2_s, fullfile(r2_dir, 'MAG_fooof_r2_sternberg_subject.csv'));
+  disp(upper(['Written: ' fullfile(r2_dir, 'MAG_fooof_r2_sternberg_subject.csv') ' (' num2str(height(r2_s)) ' FOOOF fits)']))
 end
 
 %% Build N-back multiverse table
@@ -136,16 +136,16 @@ disp(upper('--- N-BACK TASK ---'))
     n_elec, n_fooof, n_lat, n_alpha, n_gaze, n_bl_eeg, n_bl_gaze, n_universes, alphaRange);
 disp(upper(['N-back table rows: ' num2str(height(tbl_n))]))
 if height(tbl_n) == 0
-  error('AOC_multiverse_prep_subject:NoData', 'N-back table is empty.')
+  error('MAG_multiverse_prep_subject:NoData', 'N-back table is empty.')
 end
-writetable(tbl_n, fullfile(out_dir, 'multiverse_nback_subject.csv'));
-disp(upper(['Written: ' fullfile(out_dir, 'multiverse_nback_subject.csv')]))
+writetable(tbl_n, fullfile(out_dir, 'MAG_multiverse_nback_subject.csv'));
+disp(upper(['Written: ' fullfile(out_dir, 'MAG_multiverse_nback_subject.csv')]))
 if height(r2_n) > 0
-  writetable(r2_n, fullfile(r2_dir, 'fooof_r2_nback_subject.csv'));
-  disp(upper(['Written: ' fullfile(r2_dir, 'fooof_r2_nback_subject.csv') ' (' num2str(height(r2_n)) ' FOOOF fits)']))
+  writetable(r2_n, fullfile(r2_dir, 'MAG_fooof_r2_nback_subject.csv'));
+  disp(upper(['Written: ' fullfile(r2_dir, 'MAG_fooof_r2_nback_subject.csv') ' (' num2str(height(r2_n)) ' FOOOF fits)']))
 end
 
-disp(upper('=== AOC MULTIVERSE SUBJECT-LEVEL PREP DONE ==='))
+disp(upper('=== MAG MULTIVERSE SUBJECT-LEVEL PREP DONE ==='))
 
 %% ========== LOCAL FUNCTIONS ==========
 

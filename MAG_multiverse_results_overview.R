@@ -1,9 +1,9 @@
-# AOC Multiverse — Results Overview Table
+# MAG Multiverse — Results Overview Table
 #
 # Extracts key multiverse statistics from result CSVs into one table.
 # Filters: excl. 0_500ms, excl. microsaccades, fooof_method == "welch"
 #
-# Run: Rscript multiverse/AOC_multiverse_verify_numbers.R
+# Run: Rscript MAG_multiverse_verify_numbers.R
 
 library(tidyverse)
 
@@ -34,7 +34,7 @@ tbl <- tibble(section = character(), effect = character(), task = character(),
 
 # Gaze ~ condition
 for (task in c("nback", "sternberg")) {
-  p <- file.path(csv_dir, paste0("multiverse_", task, "_condition_gaze_results.csv"))
+  p <- file.path(csv_dir, paste0("MAG_multiverse_", task, "_condition_gaze_results.csv"))
   if (file.exists(p)) {
     M <- read.csv(p, stringsAsFactors = FALSE) %>% filter_data() %>% add_sig()
     tbl <- bind_rows(tbl,
@@ -47,7 +47,7 @@ for (task in c("nback", "sternberg")) {
 
 # Alpha ~ condition
 for (task in c("nback", "sternberg")) {
-  p <- file.path(csv_dir, paste0("multiverse_", task, "_condition_results.csv"))
+  p <- file.path(csv_dir, paste0("MAG_multiverse_", task, "_condition_results.csv"))
   if (file.exists(p)) {
     M <- read.csv(p, stringsAsFactors = FALSE) %>% filter_data() %>% add_sig()
     Mp <- M %>% filter(fooof == "FOOOFed")
@@ -64,7 +64,7 @@ for (task in c("nback", "sternberg")) {
 
 # Gaze -> Alpha (highest condition)
 for (task in c("nback", "sternberg")) {
-  p <- file.path(csv_dir, paste0("multiverse_", task, "_conditions_results.csv"))
+  p <- file.path(csv_dir, paste0("MAG_multiverse_", task, "_conditions_results.csv"))
   if (file.exists(p)) {
     M <- read.csv(p, stringsAsFactors = FALSE) %>% filter_data() %>% add_sig()
     hl <- unique(M$cond_label)[which.max(as.numeric(gsub("[^0-9]", "", unique(M$cond_label))))]
@@ -84,7 +84,7 @@ for (task in c("nback", "sternberg")) {
 
 # Interaction
 for (task in c("nback", "sternberg")) {
-  p <- file.path(csv_dir, paste0("multiverse_", task, "_interaction_results.csv"))
+  p <- file.path(csv_dir, paste0("MAG_multiverse_", task, "_interaction_results.csv"))
   if (file.exists(p)) {
     M <- read.csv(p, stringsAsFactors = FALSE) %>% filter_data() %>% add_sig()
     tbl <- bind_rows(tbl,
@@ -95,7 +95,7 @@ for (task in c("nback", "sternberg")) {
 }
 
 # Aperiodic
-ap_files <- c("multiverse_nback_aperiodic_gaze_results.csv", "multiverse_sternberg_aperiodic_gaze_results.csv")
+ap_files <- c("MAG_multiverse_nback_aperiodic_gaze_results.csv", "MAG_multiverse_sternberg_aperiodic_gaze_results.csv")
 if (all(file.exists(file.path(csv_dir, ap_files)))) {
   M_ap <- bind_rows(lapply(file.path(csv_dir, ap_files), read.csv, stringsAsFactors = FALSE)) %>% filter_data() %>% add_sig()
   tbl <- bind_rows(tbl,
@@ -107,7 +107,7 @@ if (all(file.exists(file.path(csv_dir, ap_files)))) {
 }
 
 # Output
-message("=== AOC Multiverse Results Overview (excl. 0_500ms, microsaccades) ===\n")
+message("=== MAG Multiverse Results Overview (excl. 0_500ms, microsaccades) ===\n")
 print(tbl, n = Inf)
-write.csv(tbl, file.path(csv_dir, "multiverse_results_overview.csv"), row.names = FALSE)
-message(sprintf("\nSaved: %s", file.path(csv_dir, "multiverse_results_overview.csv")))
+write.csv(tbl, file.path(csv_dir, "MAG_multiverse_results_overview.csv"), row.names = FALSE)
+message(sprintf("\nSaved: %s", file.path(csv_dir, "MAG_multiverse_results_overview.csv")))

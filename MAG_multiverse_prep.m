@@ -14,7 +14,7 @@
 %
 % Model in R: alpha ~ gaze_value * Condition + (1|subjectID)
 
-disp(upper('=== AOC MULTIVERSE PREP START ==='))
+disp(upper('=== MAG MULTIVERSE PREP START ==='))
 
 %% Setup: run startup and setup FIRST (startup may clear the workspace)
 path_preproc = [];
@@ -141,20 +141,20 @@ for im = 1:numel(fooof_modes_to_run)
       run_mode, welch_seg_len_sec, welch_overlap, use_parfor);
   disp(upper(['Sternberg table rows: ' num2str(height(tbl_s))]))
   if height(tbl_s) == 0
-    error('AOC_multiverse_prep:NoData', 'Sternberg table is empty.')
+    error('MAG_multiverse_prep:NoData', 'Sternberg table is empty.')
   end
   if write_untagged
-    out_s_main = fullfile(out_dir, 'multiverse_sternberg.csv');
+    out_s_main = fullfile(out_dir, 'MAG_multiverse_sternberg.csv');
     writetable(tbl_s, out_s_main);
     disp(upper(['Written: ' out_s_main]))
   end
-  out_s_mode = fullfile(out_dir, ['multiverse_sternberg_' mode_tag '.csv']);
+  out_s_mode = fullfile(out_dir, ['MAG_multiverse_sternberg_' mode_tag '.csv']);
   writetable(tbl_s, out_s_mode);
   disp(upper(['Written: ' out_s_mode]))
   if height(r2_s) > 0
-    out_r2_s_mode = fullfile(r2_dir, ['fooof_r2_sternberg_' mode_tag '.csv']);
+    out_r2_s_mode = fullfile(r2_dir, ['MAG_fooof_r2_sternberg_' mode_tag '.csv']);
     if write_untagged
-      out_r2_s_main = fullfile(r2_dir, 'fooof_r2_sternberg.csv');
+      out_r2_s_main = fullfile(r2_dir, 'MAG_fooof_r2_sternberg.csv');
       writetable(r2_s, out_r2_s_main);
       disp(upper(['Written: ' out_r2_s_main ' (' num2str(height(r2_s)) ' FOOOF fits)']))
     end
@@ -171,20 +171,20 @@ for im = 1:numel(fooof_modes_to_run)
       run_mode, welch_seg_len_sec, welch_overlap, use_parfor);
   disp(upper(['N-back table rows: ' num2str(height(tbl_n))]))
   if height(tbl_n) == 0
-    error('AOC_multiverse_prep:NoData', 'N-back table is empty.')
+    error('MAG_multiverse_prep:NoData', 'N-back table is empty.')
   end
   if write_untagged
-    out_n_main = fullfile(out_dir, 'multiverse_nback.csv');
+    out_n_main = fullfile(out_dir, 'MAG_multiverse_nback.csv');
     writetable(tbl_n, out_n_main);
     disp(upper(['Written: ' out_n_main]))
   end
-  out_n_mode = fullfile(out_dir, ['multiverse_nback_' mode_tag '.csv']);
+  out_n_mode = fullfile(out_dir, ['MAG_multiverse_nback_' mode_tag '.csv']);
   writetable(tbl_n, out_n_mode);
   disp(upper(['Written: ' out_n_mode]))
   if height(r2_n) > 0
-    out_r2_n_mode = fullfile(r2_dir, ['fooof_r2_nback_' mode_tag '.csv']);
+    out_r2_n_mode = fullfile(r2_dir, ['MAG_fooof_r2_nback_' mode_tag '.csv']);
     if write_untagged
-      out_r2_n_main = fullfile(r2_dir, 'fooof_r2_nback.csv');
+      out_r2_n_main = fullfile(r2_dir, 'MAG_fooof_r2_nback.csv');
       writetable(r2_n, out_r2_n_main);
       disp(upper(['Written: ' out_r2_n_main ' (' num2str(height(r2_n)) ' FOOOF fits)']))
     end
@@ -193,7 +193,7 @@ for im = 1:numel(fooof_modes_to_run)
   end
 end
 
-disp(upper('=== AOC MULTIVERSE PREP DONE ==='))
+disp(upper('=== MAG MULTIVERSE PREP DONE ==='))
 
 %% ========== LOCAL FUNCTIONS ==========
 

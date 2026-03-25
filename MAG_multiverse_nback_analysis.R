@@ -49,8 +49,8 @@ message(sprintf("Excluded 0_500ms rows: %d. Remaining: %d rows, %d universes.",
                 n_rows_0500, nrow(dat), n_distinct(dat$universe_id)))
 
 if (!("r_squared" %in% names(dat))) {
-  r2_path_method <- file.path(r2_dir, paste0("fooof_r2_nback_", FOOOF_METHOD, ".csv"))
-  r2_path <- if (file.exists(r2_path_method)) r2_path_method else file.path(r2_dir, "fooof_r2_nback.csv")
+  r2_path_method <- file.path(r2_dir, paste0("MAG_fooof_r2_nback_", FOOOF_METHOD, ".csv"))
+  r2_path <- if (file.exists(r2_path_method)) r2_path_method else file.path(r2_dir, "MAG_fooof_r2_nback.csv")
 
   if (file.exists(r2_path)) {
     r2 <- read.csv(r2_path, stringsAsFactors = FALSE, na.strings = c("NA", "NaN", ""))

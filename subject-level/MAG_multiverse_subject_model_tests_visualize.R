@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-# AOC Multiverse — Subject-Level Model Tests (Specification Curves)
+# MAG Multiverse — Subject-Level Model Tests (Specification Curves)
 #
 # Goal:
 #   Compare model-choice effects on subject-level multiverse figures.
@@ -8,7 +8,7 @@
 #   - Non-gaze models: test FOOOF subject-threshold scenarios only.
 #
 # Output directory:
-#   /Volumes/g_psyplafor_methlab$/Students/Arne/AOC/figures/multiverse/subject-level/model_tests
+#   /Volumes/g_psyplafor_methlab$/Students/Arne/MAG/figures/multiverse/subject-level/model_tests
 
 library(tidyverse)
 library(ggplot2)
@@ -159,8 +159,8 @@ make_ap_cond_panel <- function(df) {
 
 get_subject_keep <- function(task, threshold) {
   if (!is.finite(threshold)) return(NULL)
-  r2_path_method <- file.path(r2_dir, paste0("fooof_r2_", task, "_subject_", FOOOF_METHOD, ".csv"))
-  r2_path <- if (file.exists(r2_path_method)) r2_path_method else file.path(r2_dir, paste0("fooof_r2_", task, "_subject.csv"))
+  r2_path_method <- file.path(r2_dir, paste0("MAG_fooof_r2_", task, "_subject_", FOOOF_METHOD, ".csv"))
+  r2_path <- if (file.exists(r2_path_method)) r2_path_method else file.path(r2_dir, paste0("MAG_fooof_r2_", task, "_subject.csv"))
   if (!file.exists(r2_path)) return(NULL)
 
   r2 <- read.csv(r2_path, stringsAsFactors = FALSE, na.strings = c("NA", "NaN", ""))
@@ -175,8 +175,8 @@ get_subject_keep <- function(task, threshold) {
 
 for (task in c("sternberg", "nback")) {
   # 1) Gaze model tests from ablation details (old vs centered gaze handling).
-  alpha_detail_path <- file.path(csv_dir, paste0("multiverse_", task, "_subject_ablation_alpha_detail.csv"))
-  ap_detail_path <- file.path(csv_dir, paste0("multiverse_", task, "_subject_ablation_aperiodic_detail.csv"))
+  alpha_detail_path <- file.path(csv_dir, paste0("MAG_multiverse_", task, "_subject_ablation_alpha_detail.csv"))
+  ap_detail_path <- file.path(csv_dir, paste0("MAG_multiverse_", task, "_subject_ablation_aperiodic_detail.csv"))
   if (file.exists(alpha_detail_path) && file.exists(ap_detail_path)) {
     A <- read.csv(alpha_detail_path, stringsAsFactors = FALSE, na.strings = c("NA", "NaN", ""))
     AP <- read.csv(ap_detail_path, stringsAsFactors = FALSE, na.strings = c("NA", "NaN", ""))
@@ -204,7 +204,7 @@ for (task in c("sternberg", "nback")) {
           panel_d <- make_alpha_panel(d)
           term_lab <- ifelse(term %in% names(term_labels), term_labels[[term]], term)
           filt_lab <- ifelse(filt %in% names(filter_labels), filter_labels[[filt]], filt)
-          out <- file.path(storage_plot, paste0("AOC_", task, "_subject_alpha_gaze_test_", term_lab, "_", filt, ".png"))
+          out <- file.path(storage_plot, paste0("MAG_", task, "_subject_alpha_gaze_test_", term_lab, "_", filt, ".png"))
           plot_spec_curve(d, panel_d,
                           paste0("Alpha ~ gaze (", toupper(task), ") — ", term_lab),
                           paste0(filt_lab, "; highest condition"),
@@ -234,7 +234,7 @@ for (task in c("sternberg", "nback")) {
             panel_d <- make_ap_panel(d)
             term_lab <- ifelse(term %in% names(term_labels), term_labels[[term]], term)
             filt_lab <- ifelse(filt %in% names(filter_labels), filter_labels[[filt]], filt)
-            out <- file.path(storage_plot, paste0("AOC_", task, "_subject_aperiodic_", tolower(meas), "_gaze_test_", term_lab, "_", filt, ".png"))
+            out <- file.path(storage_plot, paste0("MAG_", task, "_subject_aperiodic_", tolower(meas), "_gaze_test_", term_lab, "_", filt, ".png"))
             plot_spec_curve(d, panel_d,
                             paste0("Aperiodic ", tolower(meas), " ~ gaze (", toupper(task), ") — ", term_lab),
                             paste0(filt_lab, "; A0/A2/A3 variants"),
@@ -248,8 +248,8 @@ for (task in c("sternberg", "nback")) {
   }
 
   # 2) Non-gaze model tests: threshold-only comparisons.
-  subject_path_method <- file.path(csv_dir, paste0("multiverse_", task, "_subject_", FOOOF_METHOD, ".csv"))
-  subject_path <- if (file.exists(subject_path_method)) subject_path_method else file.path(csv_dir, paste0("multiverse_", task, "_subject.csv"))
+  subject_path_method <- file.path(csv_dir, paste0("MAG_multiverse_", task, "_subject_", FOOOF_METHOD, ".csv"))
+  subject_path <- if (file.exists(subject_path_method)) subject_path_method else file.path(csv_dir, paste0("MAG_multiverse_", task, "_subject.csv"))
   if (!file.exists(subject_path)) next
 
   dat <- read.csv(subject_path, stringsAsFactors = FALSE, na.strings = c("NA", "NaN", ""))
@@ -304,7 +304,7 @@ for (task in c("sternberg", "nback")) {
         select(-.lat_ord, -.elec_ord) %>%
         mutate(ordered_universe = row_number())
       panel <- make_eeg_panel(M_ca)
-      out <- file.path(storage_plot, paste0("AOC_", task, "_subject_condition_alpha_threshold_", sid, ".png"))
+      out <- file.path(storage_plot, paste0("MAG_", task, "_subject_condition_alpha_threshold_", sid, ".png"))
       plot_spec_curve(M_ca, panel, paste0("alpha ~ Condition (", toupper(task), ")"), filt_lab, out, h = 9)
     }
 
@@ -333,7 +333,7 @@ for (task in c("sternberg", "nback")) {
         select(-.lat_ord, -.gaze_ord) %>%
         mutate(ordered_universe = row_number())
       panel <- make_gaze_panel(M_cg)
-      out <- file.path(storage_plot, paste0("AOC_", task, "_subject_condition_gaze_threshold_", sid, ".png"))
+      out <- file.path(storage_plot, paste0("MAG_", task, "_subject_condition_gaze_threshold_", sid, ".png"))
       plot_spec_curve(M_cg, panel, paste0("gaze ~ Condition (", toupper(task), ")"), filt_lab, out, h = 8)
     }
 
@@ -375,7 +375,7 @@ for (task in c("sternberg", "nback")) {
           select(-.lat_ord, -.elec_ord) %>%
           mutate(ordered_universe = row_number())
         panel <- make_ap_cond_panel(d)
-        out <- file.path(storage_plot, paste0("AOC_", task, "_subject_aperiodic_", tolower(meas), "_condition_threshold_", sid, ".png"))
+        out <- file.path(storage_plot, paste0("MAG_", task, "_subject_aperiodic_", tolower(meas), "_condition_threshold_", sid, ".png"))
         plot_spec_curve(d, panel, paste0("aperiodic_", tolower(meas), " ~ Condition (", toupper(task), ")"), filt_lab, out, h = 8)
       }
     }

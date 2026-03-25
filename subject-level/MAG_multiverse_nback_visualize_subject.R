@@ -1,4 +1,4 @@
-# AOC Multiverse — N-Back: Subject-Level Visualization
+# MAG Multiverse — N-Back: Subject-Level Visualization
 # Loads subject-level result CSVs and generates specification curve figures.
 #
 # Figures:
@@ -8,7 +8,7 @@
 #   4 (_subject_condition_gaze):  gaze ~ condition [gaze-only]
 #   5 (_subject_aperiodic):       aperiodic ~ gaze [specification curves]
 #
-# Requires: AOC_multiverse_nback_analysis_subject.R to have been run first.
+# Requires: MAG_multiverse_nback_analysis_subject.R to have been run first.
 
 library(tidyverse)
 library(ggplot2)
@@ -140,9 +140,9 @@ make_gaze_panel_long <- function(df, x_col) {
 # ========== LOAD RESULT CSVs ==========
 message("Loading subject-level result CSVs...")
 
-cond_path <- file.path(csv_dir, "multiverse_nback_subject_conditions_results.csv")
+cond_path <- file.path(csv_dir, "MAG_multiverse_nback_subject_conditions_results.csv")
 if (!file.exists(cond_path)) stop("Conditions CSV not found: ", cond_path,
-                                   "\nRun AOC_multiverse_nback_analysis_subject.R first.")
+                                   "\nRun MAG_multiverse_nback_analysis_subject.R first.")
 M_cond <- read.csv(cond_path, stringsAsFactors = FALSE)
 M_cond$condition <- factor(M_cond$condition, levels = sig_levels)
 M_cond <- M_cond %>% filter(gaze_measure %in% gaze_order)
@@ -194,12 +194,12 @@ p_grp_panel <- ggplot(df_grp_long, aes(x = grouped_universe, y = value, fill = c
 
 p_grp_combined <- p_grp_curve / legend_grp / p_grp_panel +
   plot_layout(heights = c(0.8, 0.1, 1.5))
-ggsave(file.path(storage_plot, "AOC_multiverse_nback_subject_grouped.png"),
+ggsave(file.path(storage_plot, "MAG_multiverse_nback_subject_grouped.png"),
        plot = p_grp_combined, width = 14, height = 12, dpi = 600, bg = "white")
-message("Saved: AOC_multiverse_nback_subject_grouped.png")
+message("Saved: MAG_multiverse_nback_subject_grouped.png")
 
 # ========== FIGURE 2: CONDITION -> ALPHA (EEG-only) ==========
-ca_path <- file.path(csv_dir, "multiverse_nback_subject_condition_results.csv")
+ca_path <- file.path(csv_dir, "MAG_multiverse_nback_subject_condition_results.csv")
 if (file.exists(ca_path)) {
   M_ca <- read.csv(ca_path, stringsAsFactors = FALSE)
   M_ca$condition <- factor(M_ca$condition, levels = sig_levels)
@@ -242,15 +242,15 @@ if (file.exists(ca_path)) {
 
   p_ca_combined <- p_ca_curve / legend_ca / p_ca_panel +
     plot_layout(heights = c(0.8, 0.1, 1.2))
-  ggsave(file.path(storage_plot, "AOC_multiverse_nback_subject_condition_alpha.png"),
+  ggsave(file.path(storage_plot, "MAG_multiverse_nback_subject_condition_alpha.png"),
          plot = p_ca_combined, width = 14, height = 10, dpi = 600, bg = "white")
-  message("Saved: AOC_multiverse_nback_subject_condition_alpha.png")
+  message("Saved: MAG_multiverse_nback_subject_condition_alpha.png")
 } else {
   message("Skipping Figure 2: subject_condition_results.csv not found.")
 }
 
 # ========== FIGURE 3: INTERACTION (gaze x condition -> alpha) ==========
-int_path <- file.path(csv_dir, "multiverse_nback_subject_interaction_results.csv")
+int_path <- file.path(csv_dir, "MAG_multiverse_nback_subject_interaction_results.csv")
 if (file.exists(int_path)) {
   M_interaction <- read.csv(int_path, stringsAsFactors = FALSE)
   M_interaction$condition <- factor(M_interaction$condition, levels = sig_levels)
@@ -296,15 +296,15 @@ if (file.exists(int_path)) {
 
   p_int_combined <- p_int_curve / legend_int / p_int_panel +
     plot_layout(heights = c(0.8, 0.1, 1.5))
-  ggsave(file.path(storage_plot, "AOC_multiverse_nback_subject_interaction.png"),
+  ggsave(file.path(storage_plot, "MAG_multiverse_nback_subject_interaction.png"),
          plot = p_int_combined, width = 14, height = 12, dpi = 600, bg = "white")
-  message("Saved: AOC_multiverse_nback_subject_interaction.png")
+  message("Saved: MAG_multiverse_nback_subject_interaction.png")
 } else {
   message("Skipping Figure 3: subject_interaction_results.csv not found.")
 }
 
 # ========== FIGURE 4: CONDITION -> GAZE (gaze-only) ==========
-cg_path <- file.path(csv_dir, "multiverse_nback_subject_condition_gaze_results.csv")
+cg_path <- file.path(csv_dir, "MAG_multiverse_nback_subject_condition_gaze_results.csv")
 if (file.exists(cg_path)) {
   M_cg <- read.csv(cg_path, stringsAsFactors = FALSE)
   M_cg$condition <- factor(M_cg$condition, levels = sig_levels)
@@ -348,16 +348,16 @@ if (file.exists(cg_path)) {
 
   p_cg_combined <- p_cg_curve / legend_cg / p_cg_panel +
     plot_layout(heights = c(0.8, 0.1, 0.8))
-  ggsave(file.path(storage_plot, "AOC_multiverse_nback_subject_condition_gaze.png"),
+  ggsave(file.path(storage_plot, "MAG_multiverse_nback_subject_condition_gaze.png"),
          plot = p_cg_combined, width = 14, height = 8, dpi = 600, bg = "white")
-  message("Saved: AOC_multiverse_nback_subject_condition_gaze.png")
+  message("Saved: MAG_multiverse_nback_subject_condition_gaze.png")
 } else {
   message("Skipping Figure 4: subject_condition_gaze_results.csv not found.")
 }
 
 # ========== FIGURE 5: APERIODIC ~ GAZE — SPECIFICATION CURVES ==========
 
-ap_gaze_path <- file.path(csv_dir, "multiverse_nback_subject_aperiodic_gaze_results.csv")
+ap_gaze_path <- file.path(csv_dir, "MAG_multiverse_nback_subject_aperiodic_gaze_results.csv")
 has_ap_gaze  <- file.exists(ap_gaze_path)
 
 if (has_ap_gaze) {
@@ -440,7 +440,7 @@ if (has_ap_gaze) {
       plot_layout(heights = c(0.8, 0.1, 1.2))
 
     suffix <- tolower(ap_measure)
-    fname <- paste0("AOC_multiverse_nback_subject_aperiodic_",
+    fname <- paste0("MAG_multiverse_nback_subject_aperiodic_",
                     suffix, "_spec.png")
     ggsave(file.path(storage_plot, fname),
            plot = p_ap_sc_combined, width = 14, height = 10, dpi = 600, bg = "white")

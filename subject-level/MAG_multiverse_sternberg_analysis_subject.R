@@ -1,5 +1,5 @@
-# AOC Multiverse — Sternberg: Subject-Level Analysis (robustness)
-# Loads pre-aggregated subject-level CSV (from AOC_multiverse_prep_subject.m),
+# MAG Multiverse — Sternberg: Subject-Level Analysis (robustness)
+# Loads pre-aggregated subject-level CSV (from MAG_multiverse_prep_subject.m),
 # fits models per universe as an aggregation sensitivity analysis.
 # Uses multiverse R package (Sarma et al., 2021).
 #
@@ -10,11 +10,11 @@
 #   M_gaze (gaze, 3D): gaze_value ~ Condition + (1|subjectID)
 #
 # Output CSVs (saved to csv_dir, with _subject_ prefix):
-#   multiverse_sternberg_subject_results.csv
-#   multiverse_sternberg_subject_conditions_results.csv
-#   multiverse_sternberg_subject_condition_results.csv
-#   multiverse_sternberg_subject_interaction_results.csv
-#   multiverse_sternberg_subject_condition_gaze_results.csv
+#   MAG_multiverse_sternberg_subject_results.csv
+#   MAG_multiverse_sternberg_subject_conditions_results.csv
+#   MAG_multiverse_sternberg_subject_condition_results.csv
+#   MAG_multiverse_sternberg_subject_interaction_results.csv
+#   MAG_multiverse_sternberg_subject_condition_gaze_results.csv
 #
 # Note:
 #   This script is intended as a robustness analysis complementing the
@@ -35,9 +35,9 @@ MIN_N_PER_UNIVERSE <- 10
 # ========== PATHS ==========
 csv_dir  <- Sys.getenv("AOC_MULTIVERSE_DIR",
                         unset = "/Volumes/g_psyplafor_methlab$/Students/Arne/MAG/data/multiverse")
-csv_path <- file.path(csv_dir, "multiverse_sternberg_subject.csv")
+csv_path <- file.path(csv_dir, "MAG_multiverse_sternberg_subject.csv")
 if (!file.exists(csv_path)) stop("Subject-level CSV not found: ", csv_path,
-                                  "\nRun AOC_multiverse_prep_subject.m first.")
+                                  "\nRun MAG_multiverse_prep_subject.m first.")
 
 # ========== LOAD & FILTER DATA ==========
 dat <- read.csv(csv_path, stringsAsFactors = FALSE, na.strings = c("NA", "NaN", ""))
@@ -257,16 +257,16 @@ if (nrow(M_cond) == 0L) stop("No successful LMM fits.")
 M_cond <- add_sig(M_cond)
 M_int  <- add_sig(M_int)
 
-write.csv(M_int, file.path(csv_dir, "multiverse_sternberg_subject_results.csv"), row.names = FALSE)
-write.csv(M_cond, file.path(csv_dir, "multiverse_sternberg_subject_conditions_results.csv"), row.names = FALSE)
-message("Saved: multiverse_sternberg_subject_results.csv, multiverse_sternberg_subject_conditions_results.csv")
+write.csv(M_int, file.path(csv_dir, "MAG_multiverse_sternberg_subject_results.csv"), row.names = FALSE)
+write.csv(M_cond, file.path(csv_dir, "MAG_multiverse_sternberg_subject_conditions_results.csv"), row.names = FALSE)
+message("Saved: MAG_multiverse_sternberg_subject_results.csv, MAG_multiverse_sternberg_subject_conditions_results.csv")
 
 # Extract interaction term
 highest_int_term <- paste0("gaze_value:Condition", highest_cond)
 M_interaction    <- M_int %>% filter(term == highest_int_term)
 if (nrow(M_interaction) > 0) {
-  write.csv(M_interaction, file.path(csv_dir, "multiverse_sternberg_subject_interaction_results.csv"), row.names = FALSE)
-  message(sprintf("Saved: multiverse_sternberg_subject_interaction_results.csv (%d universes)", nrow(M_interaction)))
+  write.csv(M_interaction, file.path(csv_dir, "MAG_multiverse_sternberg_subject_interaction_results.csv"), row.names = FALSE)
+  message(sprintf("Saved: MAG_multiverse_sternberg_subject_interaction_results.csv (%d universes)", nrow(M_interaction)))
 } else {
   message("WARNING: No interaction terms found for ", highest_int_term)
 }
@@ -323,8 +323,8 @@ M_ca <- M_eeg_expanded %>%
 
 if (nrow(M_ca) > 0L) {
   M_ca <- add_sig(M_ca)
-  write.csv(M_ca, file.path(csv_dir, "multiverse_sternberg_subject_condition_results.csv"), row.names = FALSE)
-  message(sprintf("Saved: multiverse_sternberg_subject_condition_results.csv (%d universes)", nrow(M_ca)))
+  write.csv(M_ca, file.path(csv_dir, "MAG_multiverse_sternberg_subject_condition_results.csv"), row.names = FALSE)
+  message(sprintf("Saved: MAG_multiverse_sternberg_subject_condition_results.csv (%d universes)", nrow(M_ca)))
 } else {
   message("WARNING: No successful condition \u2192 alpha fits.")
 }
@@ -377,8 +377,8 @@ M_cg <- M_gaze_expanded %>%
 
 if (nrow(M_cg) > 0L) {
   M_cg <- add_sig(M_cg)
-  write.csv(M_cg, file.path(csv_dir, "multiverse_sternberg_subject_condition_gaze_results.csv"), row.names = FALSE)
-  message(sprintf("Saved: multiverse_sternberg_subject_condition_gaze_results.csv (%d universes)", nrow(M_cg)))
+  write.csv(M_cg, file.path(csv_dir, "MAG_multiverse_sternberg_subject_condition_gaze_results.csv"), row.names = FALSE)
+  message(sprintf("Saved: MAG_multiverse_sternberg_subject_condition_gaze_results.csv (%d universes)", nrow(M_cg)))
 } else {
   message("WARNING: No successful condition \u2192 gaze fits.")
 }
@@ -459,7 +459,7 @@ if ("aperiodic_offset" %in% names(dat) && "aperiodic_exponent" %in% names(dat)) 
 
   if (nrow(M_ap_gaze_results) > 0) {
     M_ap_gaze_results <- add_sig(M_ap_gaze_results)
-    write.csv(M_ap_gaze_results, file.path(csv_dir, "multiverse_sternberg_subject_aperiodic_gaze_results.csv"), row.names = FALSE)
+    write.csv(M_ap_gaze_results, file.path(csv_dir, "MAG_multiverse_sternberg_subject_aperiodic_gaze_results.csv"), row.names = FALSE)
     message(sprintf("Saved: aperiodic_gaze_results.csv (%d rows)", nrow(M_ap_gaze_results)))
   }
 
@@ -524,7 +524,7 @@ if ("aperiodic_offset" %in% names(dat) && "aperiodic_exponent" %in% names(dat)) 
 
   if (nrow(M_ap_cond_results) > 0) {
     M_ap_cond_results <- add_sig(M_ap_cond_results)
-    write.csv(M_ap_cond_results, file.path(csv_dir, "multiverse_sternberg_subject_aperiodic_condition_results.csv"), row.names = FALSE)
+    write.csv(M_ap_cond_results, file.path(csv_dir, "MAG_multiverse_sternberg_subject_aperiodic_condition_results.csv"), row.names = FALSE)
     message(sprintf("Saved: aperiodic_condition_results.csv (%d rows)", nrow(M_ap_cond_results)))
   }
 
@@ -541,19 +541,19 @@ robust_cg <- summarize_robustness(M_cg, "condition_to_gaze")
 robust_ap_gaze <- summarize_robustness(M_ap_gaze_results, "aperiodic_to_gaze")
 robust_ap_cond <- summarize_robustness(M_ap_cond_results, "aperiodic_to_condition")
 
-if (nrow(robust_main) > 0) write.csv(robust_main, file.path(csv_dir, "multiverse_sternberg_subject_results_robustness_summary.csv"), row.names = FALSE)
-if (nrow(robust_cond) > 0) write.csv(robust_cond, file.path(csv_dir, "multiverse_sternberg_subject_conditions_results_robustness_summary.csv"), row.names = FALSE)
-if (nrow(robust_interaction) > 0) write.csv(robust_interaction, file.path(csv_dir, "multiverse_sternberg_subject_interaction_results_robustness_summary.csv"), row.names = FALSE)
-if (nrow(robust_ca) > 0) write.csv(robust_ca, file.path(csv_dir, "multiverse_sternberg_subject_condition_results_robustness_summary.csv"), row.names = FALSE)
-if (nrow(robust_cg) > 0) write.csv(robust_cg, file.path(csv_dir, "multiverse_sternberg_subject_condition_gaze_results_robustness_summary.csv"), row.names = FALSE)
-if (nrow(robust_ap_gaze) > 0) write.csv(robust_ap_gaze, file.path(csv_dir, "multiverse_sternberg_subject_aperiodic_gaze_results_robustness_summary.csv"), row.names = FALSE)
-if (nrow(robust_ap_cond) > 0) write.csv(robust_ap_cond, file.path(csv_dir, "multiverse_sternberg_subject_aperiodic_condition_results_robustness_summary.csv"), row.names = FALSE)
+if (nrow(robust_main) > 0) write.csv(robust_main, file.path(csv_dir, "MAG_multiverse_sternberg_subject_results_robustness_summary.csv"), row.names = FALSE)
+if (nrow(robust_cond) > 0) write.csv(robust_cond, file.path(csv_dir, "MAG_multiverse_sternberg_subject_conditions_results_robustness_summary.csv"), row.names = FALSE)
+if (nrow(robust_interaction) > 0) write.csv(robust_interaction, file.path(csv_dir, "MAG_multiverse_sternberg_subject_interaction_results_robustness_summary.csv"), row.names = FALSE)
+if (nrow(robust_ca) > 0) write.csv(robust_ca, file.path(csv_dir, "MAG_multiverse_sternberg_subject_condition_results_robustness_summary.csv"), row.names = FALSE)
+if (nrow(robust_cg) > 0) write.csv(robust_cg, file.path(csv_dir, "MAG_multiverse_sternberg_subject_condition_gaze_results_robustness_summary.csv"), row.names = FALSE)
+if (nrow(robust_ap_gaze) > 0) write.csv(robust_ap_gaze, file.path(csv_dir, "MAG_multiverse_sternberg_subject_aperiodic_gaze_results_robustness_summary.csv"), row.names = FALSE)
+if (nrow(robust_ap_cond) > 0) write.csv(robust_ap_cond, file.path(csv_dir, "MAG_multiverse_sternberg_subject_aperiodic_condition_results_robustness_summary.csv"), row.names = FALSE)
 
 robustness_summary <- bind_rows(
   robust_main, robust_cond, robust_interaction, robust_ca, robust_cg, robust_ap_gaze, robust_ap_cond
 )
 if (nrow(robustness_summary) > 0) {
-  write.csv(robustness_summary, file.path(csv_dir, "multiverse_sternberg_subject_robustness_summary.csv"), row.names = FALSE)
+  write.csv(robustness_summary, file.path(csv_dir, "MAG_multiverse_sternberg_subject_robustness_summary.csv"), row.names = FALSE)
   message(sprintf("Saved robustness summaries (combined rows: %d)", nrow(robustness_summary)))
 }
 
